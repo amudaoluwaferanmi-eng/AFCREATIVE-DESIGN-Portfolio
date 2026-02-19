@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AF Creative Portfolio</title>
+
+  <style>
+    :root{
+      --bg:#07070a;
+      --card:rgba(255,255,255,.05);
+      --border:rgba(255,255,255,.10);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.60);
+      --muted2:rgba(255,255,255,.45);
+      --grad: linear-gradient(90deg, #8b5cf6, #d946ef);
+    }
+
+    *{box-sizing:border-box; margin:0; padding:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;}
+    body{background:var(--bg); color:var(--text);}
+
+    a{color:inherit; text-decoration:none}
+    button{cursor:pointer; border:none; background:none; color:inherit}
+
+    .container{max-width:1100px; margin:auto; padding:0 16px;}
+
+    /* NAV */
+    .nav{
+      position:sticky; top:0; z-index:99;
+      background:rgba(0,0,0,.65);
+      backdrop-filter: blur(12px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:12px;
+    }
+    .logo{
+      display:flex; align-items:center; gap:10px;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:var(--card);
+      font-weight:800;
+      font-size:13px;
+    }
+    .dot{height:10px; width:10px; border-radius:999px; background:var(--grad);}
+    .nav-links{
+      display:flex; gap:8px; flex-wrap:wrap;
+    }
+    .nav-links button{
+      padding:10px 14px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:13px;
+      color:var(--muted);
+      border:1px solid transparent;
+      transition:.2s;
+    }
+    .nav-links button:hover{background:var(--card); color:var(--text);}
+    .nav-links button.active{
+      background:var(--grad);
+      color:white;
+    }
+
+    .btn{
+      padding:12px 16px;
+      border-radius:999px;
+      font-weight:800;
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      transition:.2s;
+    }
+    .btn.primary{background:var(--grad); color:white;}
+    .btn.ghost{background:var(--card); border:1px solid var(--border); color:var(--text);}
+    .btn:hover{opacity:.95;}
+    
+    .footer{
+  text-align:center;
+  font-size:12px;
+  color:#888;
+  margin-top:20px;
+}
+
+    /* SECTIONS */
+    .section{display:none; padding:48px 0;}
+    .section.active{display:block;}
+
+    .badge{
+      display:inline-flex;
+      padding:7px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:var(--card);
+      font-size:12px;
+      color:var(--muted);
+      font-weight:700;
+    }
+
+    .title{
+      font-size:34px;
+      font-weight:900;
+      line-height:1.1;
+      margin-top:10px;
+    }
+    .subtitle{
+      margin-top:10px;
+      color:var(--muted);
+      line-height:1.6;
+      font-size:14px;
+      max-width:650px;
+    }
+
+    .grid{
+      display:grid;
+      gap:14px;
+    }
+    .grid.two{grid-template-columns:1fr;}
+    .grid.three{grid-template-columns:1fr;}
+    .grid.four{grid-template-columns:1fr;}
+
+    @media(min-width:800px){
+      .grid.two{grid-template-columns:1.2fr .8fr;}
+      .grid.three{grid-template-columns:repeat(3, 1fr);}
+      .grid.four{grid-template-columns:repeat(4, 1fr);}
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:26px;
+      padding:16px;
+      box-shadow:0 20px 50px rgba(0,0,0,.35);
+    }
+
+    .media{
+      border-radius:18px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(255,255,255,.10), transparent);
+      aspect-ratio: 16/10;
+      display:grid;
+      place-items:center;
+      color:rgba(255,255,255,.75);
+      font-weight:800;
+      font-size:12px;
+    }
+
+    .small{font-size:12px; color:var(--muted2);}
+    .h3{font-weight:900; font-size:15px;}
+    .muted{color:var(--muted); font-size:13px; line-height:1.6;}
+
+    .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;}
+
+    .search{
+      display:flex; gap:10px; align-items:center;
+      padding:12px 14px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:var(--card);
+      margin:18px auto;
+      max-width:620px;
+    }
+    .search input{
+      width:100%;
+      background:transparent;
+      border:none;
+      outline:none;
+      color:white;
+      font-size:13px;
+    }
+    .search input::placeholder{color:rgba(255,255,255,.30);}
+
+    .filters{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:18px;}
+    .filters button{
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:var(--card);
+      font-weight:800;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .filters button.active{background:var(--grad); color:white; border-color:transparent;}
+
+    .footer{
+      border-top:1px solid var(--border);
+      padding:34px 0;
+      background:rgba(0,0,0,.45);
+    }
+    .footer p{color:var(--muted); font-size:13px; line-height:1.7;}
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <div class="nav">
+    <div class="container">
+      <div class="nav-inner">
+        <button class="logo" onclick="go('home')">
+          <span class="dot"></span>
+          AFCREATIVE DESIGN
+        </button>
+
+        <div class="nav-links">
+          <button id="nav-home" class="active" onclick="go('home')">Home</button>
+          <button id="nav-design" onclick="go('design')">Design</button>
+          <button id="nav-web" onclick="go('web')">Web</button>
+          <button id="nav-ebooks" onclick="go('ebooks')">E-books</button>
+          <button id="nav-contact" onclick="go('contact')">Contact</button>
+        </div>
+
+        <a class="btn primary" target="_blank"
+          href="https://wa.me/2348169518870?text=Hi%20AF%20Creative%2C%20I%20want%20to%20work%20with%20you">
+          Let’s Talk
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOME -->
+  <section id="home" class="section active">
+    <div class="container">
+      <div class="grid two">
+        <div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <span class="badge">Available for work</span>
+            <span class="badge">Fast delivery</span>
+            <span class="badge">Premium quality</span>
+          </div>
+
+          <h1 class="title">Hello, I’m Amuda Oluwaferanmi</h1>
+          <p style="margin-top:10px; font-weight:800; color:rgba(255,255,255,.80);">
+            Graphics Designer • Web Developer • E-book Writer
+          </p>
+          <p class="subtitle">
+            I help brands attract paying clients through converting designs, modern websites,
+            and professional e-books.
+          </p>
+
+          <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn primary" onclick="go('contact')">Contact me</button>
+            <button class="btn ghost" onclick="go('design')">View Designs</button>
+            <button class="btn ghost" onclick="go('web')">View Websites</button>
+          </div>
+
+          <p style="margin-top:16px;" class="small">
+            Nigeria • yourname@email.com
+          </p>
+        </div>
+
+        <div class="card">
+          <p class="h3">About Me</p>
+          <p class="muted" style="margin-top:8px;">
+            Creative professional focused on clean visuals, strong brand identity, and modern web UI.
+          </p>
+
+          <div class="card" style="margin-top:14px; background:rgba(0,0,0,.25);">
+            <p class="small">Phone</p>
+            <p style="font-weight:900; margin-top:4px;">+2348169518870</p>
+
+            <p class="small" style="margin-top:12px;">Facebook</p>
+            <a class="muted" target="_blank" href="https://www.facebook.com/share/1FyPtpNDkz/">
+              facebook.com/AmudaOluwaferanmi
+            </a>
+
+            <p class="small" style="margin-top:12px;">Portfolio link</p>
+            <a class="muted" target="_blank" href="https://afcreativedesign.hopp.site">
+              afcreativedesign.hopp.site
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;" class="grid three">
+        <div class="card">
+          <p class="h3">Premium Visual Design</p>
+          <p class="muted">Flyers, logos, social media ads, brand identity and clean layouts.</p>
+        </div>
+        <div class="card">
+          <p class="h3">Modern Websites</p>
+          <p class="muted">Portfolio, business websites, landing pages and clean UI builds.</p>
+        </div>
+        <div class="card">
+          <p class="h3">E-book Writing & Formatting</p>
+          <p class="muted">Writing, editing, formatting, and cover design for professional books.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESIGN -->
+  <section id="design" class="section">
+    <div class="container">
+      <span class="badge">Graphics Design</span>
+      <h2 class="title" style="font-size:28px;">Design showcase</h2>
+      <p class="subtitle">Logos, flyers, social media posts and branding.</p>
+
+      <div class="search">
+        <input id="designSearch" placeholder="Search designs (logo, flyer, branding...)" onkeyup="renderDesigns()" />
+      </div>
+
+      <div class="filters">
+        <button class="active" onclick="setDesignFilter('All')">All</button>
+        <button onclick="setDesignFilter('Logo')">Logo</button>
+        <button onclick="setDesignFilter('Flyer')">Flyer</button>
+        <button onclick="setDesignFilter('Social')">Social</button>
+        <button onclick="setDesignFilter('Branding')">Branding</button>
+      </div>
+
+      <div id="designGrid" class="grid three"></div>
+    </div>
+  </section>
+
+  <!-- WEB -->
+  <section id="web" class="section">
+    <div class="container">
+      <span class="badge">Web Development</span>
+      <h2 class="title" style="font-size:28px;">Website showcase</h2>
+      <p class="subtitle">Modern websites for brands & businesses. GASLY is featured as your main project.</p>
+
+      <div class="search">
+        <input id="webSearch" placeholder="Search websites (GASLY, portfolio, landing...)" onkeyup="renderWebsites()" />
+      </div>
+
+      <div id="gaslyFeatured" class="card" style="margin-bottom:18px;"></div>
+
+      <div id="webGrid" class="grid three"></div>
+    </div>
+  </section>
+
+  <!-- EBOOKS -->
+  <section id="ebooks" class="section">
+    <div class="container">
+      <span class="badge">E-book Writing</span>
+      <h2 class="title" style="font-size:28px;">E-book showcase</h2>
+      <p class="subtitle">Writing, formatting, and cover design.</p>
+
+      <div class="search">
+        <input id="ebookSearch" placeholder="Search e-books (business, self-help...)" onkeyup="renderEbooks()" />
+      </div>
+
+      <div id="ebookGrid" class="grid four"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <div class="container">
+      <span class="badge">Contact</span>
+      <h2 class="title" style="font-size:28px;">Let’s work together</h2>
+      <p class="subtitle">Send a message on WhatsApp or email. I reply fast.</p>
+
+      <div class="grid two">
+        <div class="card">
+          <p class="h3">Direct contact</p>
+          <p class="muted" style="margin-top:10px;">Phone: <b style="color:white;">+2348169518870</b></p>
+          <p class="muted">Email: <b style="color:white;">yourname@email.com</b></p>
+          <p class="muted">Location: <b style="color:white;">Nigeria</b></p>
+
+          <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
+            <a class="btn primary" target="_blank"
+              href="https://wa.me/2348169518870?text=Hi%20AF%20Creative%2C%20I%20need%20your%20service">
+              WhatsApp
+            </a>
+            <a class="btn ghost" href="mailto:yourname@email.com">Email</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <p class="h3">Quick message</p>
+          <p class="muted" style="margin-top:8px;">
+            Copy your message and send on WhatsApp.
+          </p>
+
+          <div style="margin-top:14px; display:grid; gap:10px;">
+            <input class="search" style="margin:0;" placeholder="Your name" />
+            <input class="search" style="margin:0;" placeholder="Service (Design/Web/E-book)" />
+            <textarea class="search" style="margin:0; border-radius:22px; min-height:120px;"
+              placeholder="Tell me what you want..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="container">
+      <p><b style="color:white;">AFCREATIVE DESIGN</b> — Let your brand stand out with premium designs.</p>
+      <div class="footer">
+  Developed by AFCREATIVE DESIGN || Amuda Oluwaferanmi
+</div>
+      <p style="margin-top:10px;">© <span id="year"></span> All rights reserved.</p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("year").innerText = new Date().getFullYear();
+
+    // PAGE NAVIGATION
+    function go(page){
+      // sections
+      document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+      document.getElementById(page).classList.add("active");
+
+      // nav
+      document.querySelectorAll(".nav-links button").forEach(b => b.classList.remove("active"));
+      document.getElementById("nav-" + page).classList.add("active");
+
+      window.scrollTo(0,0);
+    }
+
+    // DATA
+    const designs = [
+  {title:"Birthday Wish Flyer", type:"Flyer", year:"2026", img:"flyer1.jpg"},
+  {title:"Business Promo Flyer", type:"Flyer", year:"2026", img:"flyer2.jpg"},
+  {title:"Minimal Bakery Logo", type:"Logo", year:"2026", img:"logo1.png"},
+  {title:"Instagram Ad Post", type:"Social", year:"2026", img:"social1.jpg"},
+  {title:"Brand Identity Mock", type:"Branding", year:"2026", img:"branding1.jpg"},
+  {title:"Event Poster", type:"Flyer", year:"2026", img:"event1.jpg"},
+    ];
+
+    const websites = [
+      {title:"GASLY — Featured Project", type:"Brand Website", tools:["UI","Brand","Web"], featured:true},
+      {title:"Designer Portfolio", type:"Portfolio", tools:["HTML","CSS"], featured:false},
+      {title:"Small Business Landing", type:"Landing Page", tools:["HTML","CSS"], featured:false},
+      {title:"Agency Homepage", type:"Business Website", tools:["UI","Brand"], featured:false},
+    ];
+
+    const ebooks = [
+      {title:"Student Guide E-book", genre:"Education"},
+      {title:"Business Starter E-book", genre:"Business"},
+      {title:"Personal Growth Book", genre:"Self-help"},
+      {title:"Mini Recipe E-book", genre:"Lifestyle"},
+    ];
+
+    // DESIGN FILTER
+    let designFilter = "All";
+    function setDesignFilter(f){
+      designFilter = f;
+      document.querySelectorAll("#design .filters button").forEach(b => b.classList.remove("active"));
+      event.target.classList.add("active");
+      renderDesigns();
+    }
+
+    function renderDesigns(){
+      const q = document.getElementById("designSearch").value.toLowerCase();
+      const grid = document.getElementById("designGrid");
+      grid.innerHTML = "";
+
+      designs
+        .filter(d => designFilter === "All" ? true : d.type === designFilter)
+        .filter(d => d.title.toLowerCase().includes(q))
+        .forEach(d => {
+          grid.innerHTML += `
+            <div class="card">
+              <div class="media">${d.type} preview</div>
+              <div style="margin-top:12px;">
+                <p class="h3">${d.title}</p>
+                <p class="small">${d.type} • ${d.year}</p>
+                <div class="chips">
+                  <span class="badge">${d.type}</span>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+    }
+
+    // WEBSITES
+    function renderWebsites(){
+      const q = document.getElementById("webSearch").value.toLowerCase();
+
+      const featured = websites.find(w => w.featured);
+      const featuredBox = document.getElementById("gaslyFeatured");
+
+      if(featured && featured.title.toLowerCase().includes(q)){
+        featuredBox.innerHTML = `
+          <div class="grid two" style="align-items:center;">
+            <div>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <span class="badge">Featured Project</span>
+                <span class="badge">GASLY</span>
+              </div>
+              <h3 style="margin-top:10px;" class="h3">${featured.title}</h3>
+              <p class="muted" style="margin-top:8px;">
+                GASLY is your brand/project website. This section is where you’ll show the final build, UI, and branding.
+              </p>
+              <div class="chips">
+                ${featured.tools.map(t => `<span class="badge">${t}</span>`).join("")}
+              </div>
+            </div>
+            <div class="media">GASLY website preview</div>
+          </div>
+        `;
+        featuredBox.style.display = "block";
+      } else {
+        featuredBox.style.display = "none";
+      }
+
+      const grid = document.getElementById("webGrid");
+      grid.innerHTML = "";
+
+      websites
+        .filter(w => !w.featured)
+        .filter(w => w.title.toLowerCase().includes(q))
+        .forEach(w => {
+          grid.innerHTML += `
+            <div class="card">
+              <div class="media">Website preview</div>
+              <div style="margin-top:12px;">
+                <p class="h3">${w.title}</p>
+                <p class="small">${w.type}</p>
+                <div class="chips">
+                  ${w.tools.map(t => `<span class="badge">${t}</span>`).join("")}
+                </div>
+              </div>
+            </div>
+          `;
+        });
+    }
+
+    // EBOOKS
+    function renderEbooks(){
+      const q = document.getElementById("ebookSearch").value.toLowerCase();
+      const grid = document.getElementById("ebookGrid");
+      grid.innerHTML = "";
+
+      ebooks
+        .filter(e => e.title.toLowerCase().includes(q))
+        .forEach(e => {
+          grid.innerHTML += `
+            <div class="card">
+              <div style="border:1px solid rgba(255,255,255,.10); border-radius:18px; padding:12px; background:rgba(255,255,255,.03);">
+                <div style="aspect-ratio:3/4; border-radius:18px; background:linear-gradient(180deg, rgba(255,255,255,.10), transparent);"></div>
+              </div>
+              <div style="margin-top:12px;">
+                <p class="h3">${e.title}</p>
+                <p class="small">${e.genre}</p>
+                <div class="chips">
+                  <span class="badge">PDF</span>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+    }
+
+    // INIT
+    renderDesigns();
+    renderWebsites();
+    renderEbooks();
+  </script>
+</body>
+</html>
