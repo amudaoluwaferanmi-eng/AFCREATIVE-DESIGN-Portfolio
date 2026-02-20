@@ -246,6 +246,7 @@
             <button class="btn primary" onclick="go('contact')">Contact me</button>
             <button class="btn ghost" onclick="go('design')">View Designs</button>
             <button class="btn ghost" onclick="go('web')">View Websites</button>
+            <button class="btn ghost" onclick="go('ebooks')">View Ebooks</button>
           </div>
 
           <p style="margin-top:16px;" class="small">
@@ -438,8 +439,8 @@
     ];
 
     const websites = [
-  {title:"GASLY — Featured Project", type:"Brand Website", tools:["UI","Brand","Web"], featured:true, link: "https://tinyurl.com/gasly"},
-  {title:"Designer Portfolio", type:"Portfolio", tools:["HTML","CSS"], featured:false, link: "https://yourportfolio.com"},
+  {title:"GASLY", type:"Brand Website", tools:["UI","Brand","Web"], featured:true, },
+  {title:"Designer Portfolio", type:"Portfolio", tools:["HTML","CSS"], featured:false, link: "https://yourportfolio.com",},
   {title:"Small Business Landing", type:"Landing Page", tools:["HTML","CSS"], featured:false, link: "https://smallbusiness.com"},
   {title:"Agency Homepage", type:"Business Website", tools:["UI","Brand"], featured:false, link: "https://agencyhomepage.com"}
 ];
@@ -489,61 +490,68 @@
     }
 
     // WEBSITES
-    function renderWebsites(){
-      const q = document.getElementById("webSearch").value.toLowerCase();
+   function renderWebsites(){
+  const q = document.getElementById("webSearch").value.toLowerCase();
+  const featured = websites.find(w => w.featured); // Find GASLY
+  const featuredBox = document.getElementById("gaslyFeatured");
 
-      const featured = websites.find(w => w.featured);
-      const featuredBox = document.getElementById("gaslyFeatured");
-
-      if(featured && featured.title.toLowerCase().includes(q)){
-        featuredBox.innerHTML = `
-          <div class="grid two" style="align-items:center;">
-            <div>
-              <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                <span class="badge">Featured Project</span>
-                <span class="badge">GASLY</span>
-              </div>
-              <h3 style="margin-top:10px;" class="h3">${featured.title}</h3>
-              <p class="muted" style="margin-top:8px;">
-                GASLY is your brand/project website. This section is where you’ll show the final build, UI, and branding.
-              </p>
-              <div class="chips">
-                ${featured.tools.map(t => `<span class="badge">${t}</span>`).join("")}
-              </div>
+  if (featured) {
+    // Show GASLY if it's featured
+    if (featured.title.toLowerCase().includes(q)) {
+      featuredBox.innerHTML = `
+        <div class="grid two" style="align-items:center;">
+          <div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <span class="badge">Featured Project</span>
+              <span class="badge">GASLY</span>
             </div>
-            <div class="media">GASLY website preview</div>
+            <h3 style="margin-top:10px;" class="h3">${featured.title}</h3>
+            <p class="muted" style="margin-top:8px;">
+              GASLY is your brand/project website. This section is where you’ll show the final build, UI, and branding.
+            </p>
+            <div class="chips">
+              ${featured.tools.map(t => `<span class="badge">${t}</span>`).join("")}
+            </div>
+            <p class="muted
+            <div class="media">
+            <img src="gasly1.png" alt="${featured.title} Preview" style="width:100%; border-radius:18px;">
           </div>
-        `;
-        featuredBox.style.display = "block";
-      } else {
-        featuredBox.style.display = "none";
-      }
-
-      const grid = document.getElementById("webGrid");
-      grid.innerHTML = "";
-
-      websites
-        .filter(w => !w.featured)
-        .filter(w => w.title.toLowerCase().includes(q))
-        .forEach(w => {
-          grid.innerHTML += `
-  <div class="card">
-    <div class="media">
-      <a href="${w.link}" target="_blank">
-        Website preview
-      </a>
-    </div>
-    <div style="margin-top:12px;">
-      <p class="h3">${w.title}</p>
-      <p class="small">${w.type}</p>
-      <div class="chips">
-        ${w.tools.map(t => `<span class="badge">${t}</span>`).join("")}
-      </div>
-    </div>
-  </div>
-`;
-        });
+            <a href="${featured.link}" target="_blank" class="btn primary">Visit Website</a>
+          </div>
+          
+        </div>
+      `;
+      featuredBox.style.display = "block";
+    } else {
+      featuredBox.style.display = "none";
     }
+  }
+
+  const grid = document.getElementById("webGrid");
+  grid.innerHTML = "";
+
+  websites
+    .filter(w => !w.featured)
+    .filter(w => w.title.toLowerCase().includes(q))
+    .forEach(w => {
+      grid.innerHTML += `
+        <div class="card">
+          <div class="media">
+            <img src="images/${w.img}" alt="${w.title} Preview" style="width:100%; border-radius:18px;">
+          </div>
+          <div style="margin-top:12px;">
+            <p class="h3">${w.title}</p>
+            <p class="small">${w.type}</p>
+            <div class="chips">
+              ${w.tools.map(t => `<span class="badge">${t}</span>`).join("")}
+            </div>
+           
+            <a href="${w.link}" target="_blank" class="btn primary">Visit Website</a>
+          </div>
+        </div>
+      `;
+    });
+}
 
     // EBOOKS
     function renderEbooks(){
