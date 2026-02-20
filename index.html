@@ -249,7 +249,7 @@
           </div>
 
           <p style="margin-top:16px;" class="small">
-            Nigeria • yourname@email.com
+            Nigeria • amudaoluwaferanmi@gmail.com
           </p>
         </div>
 
@@ -310,6 +310,9 @@
         <button onclick="setDesignFilter('Flyer')">Flyer</button>
         <button onclick="setDesignFilter('Social')">Social</button>
         <button onclick="setDesignFilter('Branding')">Branding</button>
+        <button onclick="setDesignFilter('Card')">Card</button>
+        <button onclick="setDesignFilter('Tshirt Design')">Tshirt Design</button>
+        <button onclick="setDesignFilter('Mockup')">Mockup</button>
       </div>
 
       <div id="designGrid" class="grid three"></div>
@@ -359,7 +362,7 @@
         <div class="card">
           <p class="h3">Direct contact</p>
           <p class="muted" style="margin-top:10px;">Phone: <b style="color:white;">+2348169518870</b></p>
-          <p class="muted">Email: <b style="color:white;">yourname@email.com</b></p>
+          <p class="muted">Email: <b style="color:white;">amudaoluwaferanmi@gmail.com</b></p>
           <p class="muted">Location: <b style="color:white;">Nigeria</b></p>
 
           <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
@@ -367,7 +370,7 @@
               href="https://wa.me/2348169518870?text=Hi%20AF%20Creative%2C%20I%20need%20your%20service">
               WhatsApp
             </a>
-            <a class="btn ghost" href="mailto:yourname@email.com">Email</a>
+            <a class="btn ghost" href="mailto:amudaoluwaferanmi@gmai.com">Email</a>
           </div>
         </div>
 
@@ -417,20 +420,29 @@
 
     // DATA
     const designs = [
-  {title:"Birthday Wish Flyer", type:"Flyer", year:"2026", img:"flyer1.jpg"},
+   {title:"Minimal Bakery Logo", type:"Logo", year:"2026", img:"logo1.jpg"},
+  {title:"Business Flyer", type:"Flyer", year:"2026", img:"flyer1.jpg"},
   {title:"Business Promo Flyer", type:"Flyer", year:"2026", img:"flyer2.jpg"},
-  {title:"Minimal Bakery Logo", type:"Logo", year:"2026", img:"logo1.png"},
+  {title:"Cosmetic Logo", type:"Logo", year:"2025", img:"logo2.jpg"},
+  {title:"Social Media Ad", type:"Social", year:"2026", img:"social.png"},
+  {title:"Minimal Bakery Logo", type:"Logo", year:"2024", img:"logo3.jpg"},
   {title:"Instagram Ad Post", type:"Social", year:"2026", img:"social1.jpg"},
   {title:"Brand Identity Mock", type:"Branding", year:"2026", img:"branding1.jpg"},
+  {title:"Social Media Ad", type:"Social", year:"2026", img:"social2.png"},
   {title:"Event Poster", type:"Flyer", year:"2026", img:"event1.jpg"},
+  {title:"Business Card", type:"Card", year:"2026", img:"card1.jpg"},
+  {title:"Print-on Design", type:"Tshirt Design", year:"2026", img:"tshirt2.jpg"},
+  {title:"Print-on Design", type:"Tshirt Design", year:"2026", img:"tshirt1.jpg"},
+  {title:"Package Design", type:"Mockup Design", year:"2024", img:"mockup1.png"},
+  {title:"Package Design", type:"Mockup Design", year:"2026", img:"mockup2.jpg"},
     ];
 
     const websites = [
-      {title:"GASLY — Featured Project", type:"Brand Website", tools:["UI","Brand","Web"], featured:true},
-      {title:"Designer Portfolio", type:"Portfolio", tools:["HTML","CSS"], featured:false},
-      {title:"Small Business Landing", type:"Landing Page", tools:["HTML","CSS"], featured:false},
-      {title:"Agency Homepage", type:"Business Website", tools:["UI","Brand"], featured:false},
-    ];
+  {title:"GASLY — Featured Project", type:"Brand Website", tools:["UI","Brand","Web"], featured:true, link: "https://tinyurl.com/gasly"},
+  {title:"Designer Portfolio", type:"Portfolio", tools:["HTML","CSS"], featured:false, link: "https://yourportfolio.com"},
+  {title:"Small Business Landing", type:"Landing Page", tools:["HTML","CSS"], featured:false, link: "https://smallbusiness.com"},
+  {title:"Agency Homepage", type:"Business Website", tools:["UI","Brand"], featured:false, link: "https://agencyhomepage.com"}
+];
 
     const ebooks = [
       {title:"Student Guide E-book", genre:"Education"},
@@ -459,7 +471,11 @@
         .forEach(d => {
           grid.innerHTML += `
             <div class="card">
-              <div class="media">${d.type} preview</div>
+              <div class="media">
+  <img src="images/${d.img}" 
+       alt="${d.title}" 
+       style="width:100%; height:100%; object-fit:cover; border-radius:18px;">
+</div>
               <div style="margin-top:12px;">
                 <p class="h3">${d.title}</p>
                 <p class="small">${d.type} • ${d.year}</p>
@@ -511,17 +527,21 @@
         .filter(w => w.title.toLowerCase().includes(q))
         .forEach(w => {
           grid.innerHTML += `
-            <div class="card">
-              <div class="media">Website preview</div>
-              <div style="margin-top:12px;">
-                <p class="h3">${w.title}</p>
-                <p class="small">${w.type}</p>
-                <div class="chips">
-                  ${w.tools.map(t => `<span class="badge">${t}</span>`).join("")}
-                </div>
-              </div>
-            </div>
-          `;
+  <div class="card">
+    <div class="media">
+      <a href="${w.link}" target="_blank">
+        Website preview
+      </a>
+    </div>
+    <div style="margin-top:12px;">
+      <p class="h3">${w.title}</p>
+      <p class="small">${w.type}</p>
+      <div class="chips">
+        ${w.tools.map(t => `<span class="badge">${t}</span>`).join("")}
+      </div>
+    </div>
+  </div>
+`;
         });
     }
 
