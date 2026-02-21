@@ -386,6 +386,11 @@
             <input class="search" style="margin:0;" placeholder="Service (Design/Web/E-book)" />
             <textarea class="search" style="margin:0; border-radius:22px; min-height:120px;"
               placeholder="Tell me what you want..."></textarea>
+              <div style="margin-top:14px;">
+  <button onclick="sendMessage()" class="btn primary" style="width:100%;">
+    Send Message
+  </button>
+</div>
           </div>
         </div>
       </div>
@@ -441,17 +446,30 @@
 
     const websites = [
   {title:"GASLY", type:"Brand Website", tools:["UI","Brand","Web"], featured:true, link: "https://tinyurl.com/gasly"},
-  {title:"SkillConnect: Online class website", type:"Portfolio", tools:["HTML","CSS"], featured:false, link: "https://tinyurl.com/skillconnect1",},
-  {title:"Small Business Landing", type:"Landing Page", tools:["HTML","CSS"], featured:false, link: "https://smallbusiness.com"},
-  {title:"Agency Homepage", type:"Business Website", tools:["UI","Brand"], featured:false, link: "https://agencyhomepage.com"}
+  {title:"SkillConnect: Online class website", type:"Portfolio", tools:["HTML","CSS"], featured:false, link: "https://tinyurl.com/skillconnect1", img:"skill1.jpg"},
+  {title:"CBT", type:"Landing Page", tools:["HTML","CSS"], featured:false, link: "https://tinyurl.com/unilesa-testpractice", img:"cbt.jpg"},
 ];
 
     const ebooks = [
-      {title:"Student Guide E-book", genre:"Education"},
-      {title:"Business Starter E-book", genre:"Business"},
-      {title:"Personal Growth Book", genre:"Self-help"},
-      {title:"Mini Recipe E-book", genre:"Lifestyle"},
-    ];
+  {
+    title: "Red Jack",
+    genre: "Mystery and Romance Story",
+    img: "redjack.png",
+    link: "https://docs.google.com/document/d/1omRF0TkPJ0VuCooGfGGdpCS_3yWC0p4teB-lPqjsawQ/edit?usp=drivesdk"
+  },
+  {
+    title: "Nigeria Twenty Recipes E-book",
+    genre: "Lifestyle",
+    img: "recipe.jpg",
+    link: "https://docs.google.com/document/d/1T0hFJ4Ryl7ADerPQHqfan3wyw2EJ3_TgBeFc5aPuF9Y/edit?usp=drivesdk"
+  },
+  {
+    title: "The Self-Confidence Blueprint",
+    genre: "Self-help",
+    img: "growth.jpg",
+    link: "https://docs.google.com/document/d/1PHX4BDvQZXpdrkCYAQorArgjYvpJmy_G4yoSeMMCm9s/edit?usp=drivesdk"
+  },
+];
 
     // DESIGN FILTER
     let designFilter = "All";
@@ -562,34 +580,71 @@
 
     // EBOOKS
     function renderEbooks(){
-      const q = document.getElementById("ebookSearch").value.toLowerCase();
-      const grid = document.getElementById("ebookGrid");
-      grid.innerHTML = "";
+  const q = document.getElementById("ebookSearch").value.toLowerCase();
+  const grid = document.getElementById("ebookGrid");
+  grid.innerHTML = "";
 
-      ebooks
-        .filter(e => e.title.toLowerCase().includes(q))
-        .forEach(e => {
-          grid.innerHTML += `
-            <div class="card">
-              <div style="border:1px solid rgba(255,255,255,.10); border-radius:18px; padding:12px; background:rgba(255,255,255,.03);">
-                <div style="aspect-ratio:3/4; border-radius:18px; background:linear-gradient(180deg, rgba(255,255,255,.10), transparent);"></div>
-              </div>
-              <div style="margin-top:12px;">
-                <p class="h3">${e.title}</p>
-                <p class="small">${e.genre}</p>
-                <div class="chips">
-                  <span class="badge">PDF</span>
-                </div>
-              </div>
+  ebooks
+    .filter(e => e.title.toLowerCase().includes(q))
+    .forEach(e => {
+
+      grid.innerHTML += `
+        <div class="card">
+
+          <!-- Ebook Cover -->
+          <div style="border-radius:18px; overflow:hidden;">
+            <img src="${e.img}"
+                 alt="${e.title}"
+                 style="width:100%; height:300px; object-fit:cover;">
+          </div>
+
+          <!-- Text Section -->
+          <div style="margin-top:12px;">
+            <p class="h3">${e.title}</p>
+            <p class="small">${e.genre}</p>
+
+            <div class="chips">
+              <span class="badge">PDF</span>
             </div>
-          `;
-        });
-    }
+
+            ${e.link ? `
+              <a href="${e.link}" target="_blank" class="btn primary" style="margin-top:10px;">
+                View E-book
+              </a>
+            ` : ""}
+
+          </div>
+
+        </div>
+      `;
+    });
+}
 
     // INIT
     renderDesigns();
     renderWebsites();
     renderEbooks();
+    function sendMessage() {
+  const name = document.querySelector('input[placeholder="Your name"]').value;
+  const service = document.querySelector('input[placeholder="Service (Design/Web/E-book)"]').value;
+  const message = document.querySelector('textarea').value;
+
+  const fullMessage = 
+`Hello AF Creative,
+
+My Name: ${name}
+Service Needed: ${service}
+
+Message:
+${message}`;
+
+  const encodedMessage = encodeURIComponent(fullMessage);
+
+  const whatsappLink = 
+  "https://wa.me/2348169518870?text=" + encodedMessage;
+
+  window.open(whatsappLink, "_blank");
+}
   </script>
 </body>
 </html>
