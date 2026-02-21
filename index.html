@@ -500,26 +500,34 @@
     // Show GASLY if it's featured
     if (featured.title.toLowerCase().includes(q)) {
       featuredBox.innerHTML = `
-        <div class="grid two" style="align-items:center; gap:20px;">
-            <div style="display:flex; gap:8px; flex-wrap:wrap;">
-              <span class="badge">Featured Project</span>
-              <span class="badge">GASLY</span>
-            </div>
-            <h3 style="margin-top:10px;" class="h3">${featured.title}</h3>
-            <p class="muted" style="margin-top:8px;">
-              GASLY is a fashion brand online shopping website. 
-            </p>
-            <div class="chips">
-              ${featured.tools.map(t => `<span class="badge">${t}</span>`).join("")}
-            </div>
-            <div class="media">
-            <img src="gasly1.png" alt="${featured.title} Preview" style="width:100%; max-height:300px; object-fit:cover; border-radius:18px;">
-          </div>
-            <a href="${featured.link}" target="_blank" class="btn primary">Visit Website</a>
-          </div>
-          
-        </div>
-      `;
+  <div style="display:flex; gap:40px; align-items:center; flex-wrap:wrap;">
+
+    <div style="flex:1; min-width:280px;">
+      <img src="gasly1.png" src="${featured.img}" 
+           style="width:100%; max-height:350px; object-fit:cover; border-radius:18px;">
+    </div>
+
+    <div style="flex:1; min-width:280px;">
+      <h2>${featured.title}</h2>
+      <p style="margin:10px 0 20px 0;">
+        GASLY is a fashion brand online shopping website.
+      </p>
+
+      <div style="margin-bottom:20px;">
+        ${featured.tools.map(t => `<span class="badge">${t}</span>`).join("")}
+      </div>
+
+      <a href="${featured.link}" target="_blank" 
+         style="display:inline-block; padding:12px 30px; 
+                border-radius:30px; 
+                background:linear-gradient(90deg,#8a2be2,#ff4ecd); 
+                color:white; text-decoration:none;">
+        Visit Website
+      </a>
+    </div>
+
+  </div>
+`;
       featuredBox.style.display = "block";
     } else {
       featuredBox.style.display = "none";
