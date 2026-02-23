@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AF Creative Portfolio</title>
   
-  <!-- Google tag (gtag.js) -->  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0QWT00QE9L"></script>  <script>  
+  <!-- Google tag (gtag.js) -->  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0QWT00QE9L"></script> 
+  <script>  
   window.dataLayer = window.dataLayer || [];  
   function gtag(){dataLayer.push(arguments);}  
   gtag('js', new Date());  
@@ -606,12 +607,11 @@ function go(page){
     target.classList.add("active");
   }
   // track website section safely
-  if(page === "website" && typeof gtag === "function"){
-    gtag("event", "gasly_view", {
-      event_category: "portfolio",
-      event_label: "gasly_project"
-    });
-  }
+  if (typeof gtag === "function") {
+  gtag("event", "section_view", {
+    section_name: page
+  });
+}
 }
 
     // DATA
@@ -860,8 +860,11 @@ ${message}`;
   const whatsappLink = 
   "https://wa.me/2348169518870?text=" + encodedMessage;
 
-  window.open(whatsappLink, "_blank");
-}
+gtag('event', 'whatsapp_click', {
+  event_category: 'engagement'
+});
+
+window.open(whatsappLink, "_blank");}
   </script>
   <script>
   const faders = document.querySelectorAll('.fade-in');
