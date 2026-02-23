@@ -230,6 +230,45 @@
     }
     .footer p{color:var(--muted); font-size:13px; line-height:1.7;}
   </style>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-analytics.js";
+  import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } 
+  from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC74ZuiTzZiHSdhOK2CdjhWOy0A2ICWV9E",
+    authDomain: "afcreative-design.firebaseapp.com",
+    projectId: "afcreative-design",
+    storageBucket: "afcreative-design.firebasestorage.app",
+    messagingSenderId: "410647841388",
+    appId: "1:410647841388:web:6d4e16ae6cbd32c8012649",
+    measurementId: "G-79SZRQ8X8Q"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const db = getFirestore(app);
+
+  // Visitor Counter
+  const counterRef = doc(db, "siteData", "counter");
+
+  async function updateCounter() {
+    const docSnap = await getDoc(counterRef);
+
+    if (docSnap.exists()) {
+      await updateDoc(counterRef, {
+        visits: increment(1)
+      });
+    } else {
+      await setDoc(counterRef, {
+        visits: 1
+      });
+    }
+  }
+
+  updateCounter();
+</script>
 </head>
 
 <body>
@@ -299,9 +338,6 @@
             <button class="btn ghost" onclick="go('ebooks')">View Ebooks</button>
           </div>
 
-          <p style="margin-top:16px;" class="small">
-            Nigeria • amudaoluwaferanmi@gmail.com
-          </p>
         </div>
 
         <div class="card">
@@ -319,10 +355,13 @@
               facebook.com/AmudaOluwaferanmi
             </a>
 
-            <p class="small" style="margin-top:12px;">Portfolio link</p>
-            <a class="muted" target="_blank" href="https://afcreativedesign.hopp.site">
-              afcreativedesign.hopp.site
+            <p class="small" style="margin-top:12px;">Email Address</p>
+            <a class="muted" target="_blank" href="amudaoluwaferanmi@gmail.com">
+              amudaoluwaferanmi@gmai.com
             </a>
+             <a style="margin-top:16px;" class="small">
+            Nigeria
+          </a>
           </div>
         </div>
       </div>
@@ -538,10 +577,6 @@
       </div>
     </div>
   </section>
-
-<div style="margin-top:20px; text-align:center;">
-  Visitors: <span id="visitorCount">Loading...</span>
-</div>
 
   <!-- FOOTER -->
   <div class="footer">
@@ -846,6 +881,39 @@ fetch("https://api.countapi.xyz/hit/afcreativeportfolio/visits")
   .then(res => res.json())
   .then(data => {
     document.getElementById("visitorCount").innerText = data.value;
+  });
+</script>
+<script>
+  // Your Firebase config (replace with yours)
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  // Visitor Counter
+  const counterRef = db.collection("stats").doc("visits");
+
+  counterRef.get().then((doc) => {
+    if (doc.exists) {
+      counterRef.update({
+        count: firebase.firestore.FieldValue.increment(1)
+      });
+    } else {
+      counterRef.set({ count: 1 });
+    }
+  });
+
+  // Display Count
+  counterRef.onSnapshot((doc) => {
+    document.getElementById("visitorCount").innerText = doc.data().count;
   });
 </script>
 </body>
