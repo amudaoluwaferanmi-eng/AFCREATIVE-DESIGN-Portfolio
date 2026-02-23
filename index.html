@@ -539,6 +539,10 @@
     </div>
   </section>
 
+<div style="margin-top:20px; text-align:center;">
+  Visitors: <span id="visitorCount">Loading...</span>
+</div>
+
   <!-- FOOTER -->
   <div class="footer">
     <div class="container">
@@ -836,6 +840,13 @@ ${message}`;
   });
 
   faders.forEach(el => observer.observe(el));
+</script>
+<script>
+fetch("https://api.countapi.xyz/hit/afcreativeportfolio/visits")
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("visitorCount").innerText = data.value;
+  });
 </script>
 </body>
 </html>
