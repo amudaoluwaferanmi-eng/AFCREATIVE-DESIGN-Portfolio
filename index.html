@@ -37,6 +37,18 @@
   padding: 0 20px;
 }
 
+   /* Fade-in animation */
+.fade-in {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.fade-in.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
     /* NAV */
     .nav{
       position:sticky; top:0; z-index:99;
@@ -87,6 +99,10 @@
       justify-content:center;
       gap:8px;
       transition:.2s;
+      transition: all 0.3s ease;
+.btn:hover {
+  transform: scale(1.05);
+}
     }
     .btn.primary{background:var(--grad); color:white;}
     .btn.ghost{background:var(--card); border:1px solid var(--border); color:var(--text);}
@@ -151,6 +167,11 @@
       border-radius:26px;
       padding:16px;
       box-shadow:0 20px 50px rgba(0,0,0,.35);
+     transition: all 0.3s ease;
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,.25);
+}
     }
 
     .media{
@@ -231,7 +252,11 @@
         </div>
 
         <a class="btn primary" target="_blank"
-          href="https://wa.me/2348169518870?text=Hi%20AF%20Creative%2C%20I%20want%20to%20work%20with%20you">
+          href="https://wa.me/2348169518870?text=Hi%20AF%20Creative%2C%20I%20want%20to%20work%20with%20you" 
+          onclick="gtag('event','whatsapp_click',{
+  event_category:'engagement',
+  event_label:'whatsapp_button'
+})">
           Let’s Talk
         </a>
       </div>
@@ -302,36 +327,7 @@
         </div>
       </div>
 
-
-<section style="margin-top:80px;">
-  <h2 class="title" style="font-size:28px;">My Services</h2>
-
-  <div class="grid three" style="margin-top:20px;">
-
-    <div class="card">
-      <p class="h3">Graphics Design</p>
-      <p class="muted" style="margin-top:8px;">
-        Logos, flyers, social media designs, branding, and clean marketing materials.
-      </p>
-    </div>
-
-    <div class="card">
-      <p class="h3">Web Development</p>
-      <p class="muted" style="margin-top:8px;">
-        Modern responsive websites, landing pages, and portfolio sites built with clean UI.
-      </p>
-    </div>
-
-    <div class="card">
-      <p class="h3">E-book Writing & Formatting</p>
-      <p class="muted" style="margin-top:8px;">
-        Writing, editing, professional formatting and beautiful cover designs ready for publishing.
-      </p>
-    </div>
-
-  </div>
-</section>
-<section style="margin-top:80px;">
+<section class="fade-in" style="margin-top:80px;">
   <h2 class="title" style="font-size:30px;">My Skills</h2>
 
   <div style="margin-top:20px; display:grid; gap:18px;">
@@ -374,7 +370,36 @@
   </div>
 </section>
 
-<section style="margin-top:80px;">
+<section class="fade-in" style="margin-top:80px;">
+  <h2 class="title" style="font-size:28px;">My Services</h2>
+
+  <div class="grid three" style="margin-top:20px;">
+
+    <div class="card">
+      <p class="h3">Graphics Design</p>
+      <p class="muted" style="margin-top:8px;">
+        Logos, flyers, social media designs, branding, and clean marketing materials.
+      </p>
+    </div>
+
+    <div class="card">
+      <p class="h3">Web Development</p>
+      <p class="muted" style="margin-top:8px;">
+        Modern responsive websites, landing pages, and portfolio sites built with clean UI.
+      </p>
+    </div>
+
+    <div class="card">
+      <p class="h3">E-book Writing & Formatting</p>
+      <p class="muted" style="margin-top:8px;">
+        Writing, editing, professional formatting and beautiful cover designs ready for publishing.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<section class="fade-in" style="margin-top:80px;">
   <h2 class="title" style="font-size:28px;">Client Reviews</h2>
 
   <div class="grid three" style="margin-top:20px;">
@@ -481,7 +506,11 @@
 
           <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
             <a class="btn primary" target="_blank"
-              href="https://wa.me/2348169518870?text=Hi%20AF%20Creative%2C%20I%20need%20your%20service">
+              href="https://wa.me/2348169518870?text=Hi%20AF%20Creative%2C%20I%20need%20your%20service" 
+              onclick="gtag('event','whatsapp_click',{
+  event_category:'engagement',
+  event_label:'whatsapp_button'
+})">
               WhatsApp
             </a>
             <a class="btn ghost" href="mailto:amudaoluwaferanmi@gmai.com">Email</a>
@@ -526,17 +555,25 @@
     document.getElementById("year").innerText = new Date().getFullYear();
 
     // PAGE NAVIGATION
-    function go(page){
-      // sections
-      document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
-      document.getElementById(page).classList.add("active");
+function go(page){
 
-      // nav
-      document.querySelectorAll(".nav-links button").forEach(b => b.classList.remove("active"));
-      document.getElementById("nav-" + page).classList.add("active");
-
-      window.scrollTo(0,0);
-    }
+  // remove active class
+  document.querySelectorAll(".section").forEach(function(s){
+    s.classList.remove("active");
+  });
+  // show selected section
+  var target = document.getElementById(page);
+  if(target){
+    target.classList.add("active");
+  }
+  // track website section safely
+  if(page === "website" && typeof gtag === "function"){
+    gtag("event", "gasly_view", {
+      event_category: "portfolio",
+      event_label: "gasly_project"
+    });
+  }
+}
 
     // DATA
     const designs = [
@@ -787,5 +824,18 @@ ${message}`;
   window.open(whatsappLink, "_blank");
 }
   </script>
+  <script>
+  const faders = document.querySelectorAll('.fade-in');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      }
+    });
+  });
+
+  faders.forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
